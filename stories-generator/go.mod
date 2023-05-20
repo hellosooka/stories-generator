@@ -1,3 +1,3 @@
-module github.com/hellosooka/vue-stories-generator
+module github.com/hellosooka/stories-generator
 
 go 1.19

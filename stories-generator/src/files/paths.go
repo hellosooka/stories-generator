@@ -6,14 +6,6 @@ import (
 	"strings"
 )
 
-func ParseTemplatePaths(rootDir string) ([]string, error) {
-	files, err := ParseFilesPath(rootDir)
-	if err != nil {
-		return nil, err
-	}
-	return FilterByExtend(files, ".tmpl"), nil
-}
-
 func ParseFilesPath(path string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {

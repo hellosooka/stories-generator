@@ -1,0 +1,29 @@
+import {{.Filename}} from './{{ .FullFilename }}'
+import { Meta, Story } from "@storybook/vue3";
+import { defineComponent } from "vue";
+
+export default {
+  title: "{{ .Section }}/{{ .Filename }}",
+  component: {{ .Filename }},
+  argTypes: {
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: [
+          "import { {{ .Filename }} } from '@estelink/{{ .Section }}'\n\n",
+          "<{{ .Filename }} />",
+        ].join("\n"),
+      },
+    },
+  },
+};
+
+const Template: Story = (args) =>
+  defineComponent({
+    components: { {{ .Filename }} },
+    setup: () => ({ args }),
+    template: `<{{ .Filename }} v-bind="args" />`,
+  });
+
+export const Default = Template.bind({});

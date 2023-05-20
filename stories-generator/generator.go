@@ -1,32 +1,14 @@
 package main
 
-import (
-	"github.com/hellosooka/vue-stories-generator/src/files"
-	"log"
-	"os"
-	"text/template"
-)
+import vue_parser "github.com/hellosooka/stories-generator/src/vue"
 
-type Test struct {
-	bebra string
+type StoryItem struct {
+	Filename string
+	Section  string
 }
 
 func main() {
-	bebra := Test{bebra: "test"}
-	temps, err := fileparser.ParseTemplatePaths("./templates/")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t, err := template.New("vue-story").ParseFiles(temps...)
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = t.Execute(os.Stdout, bebra)
-	if err != nil {
-		panic(err)
-	}
-
+	vue_parser.CreateVueStories("./testFileTree/", "./templates/")
 }
 
 // Vue/utils
