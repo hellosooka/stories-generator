@@ -19,7 +19,7 @@ func CreateVueStories(path string, templatePath string) {
 	files := fileparser.GetStoryItems(parseVueFilesPath(path))
 
 	for i := 0; i < len(files); i++ {
-		f, err := os.Create(createStoryFilename(files[i].Filename))
+		f, err := os.Create(fmt.Sprintf("%s%s", files[i].Directory, createStoryFilename(files[i].Filename)))
 		if err != nil {
 			log.Fatal(err)
 		}
