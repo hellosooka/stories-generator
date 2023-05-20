@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-
 	vue_parser "github.com/hellosooka/stories-generator/src/vue"
 )
 
