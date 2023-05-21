@@ -7,7 +7,7 @@ import (
 	"github.com/hellosooka/stories-generator/src/constants"
 )
 
-type StoryItem struct {
+type storyItem struct {
 	Filename     string
 	FullFilename string
 	Section      string
@@ -23,21 +23,21 @@ func ParseTemplatePaths(rootDir string) ([]string, error) {
 	return FilterByExtend(files, constants.TEMPLATE_EXTEND), nil
 }
 
-func GetStoryItems(files []string) []StoryItem {
-	var result []StoryItem
+func GetStoryItems(files []string, section string) []storyItem {
+	var result []storyItem
 	for i := 0; i < len(files); i++ {
-		result = append(result, pathToStoryItem(files[i]))
+		result = append(result, pathToStoryItem(files[i], section))
 	}
 	return result
 }
 
-func pathToStoryItem(path string) StoryItem {
+func pathToStoryItem(path string, section string) storyItem {
 	parsPath := strings.Split(path, "/")
 
-	return StoryItem{
+	return storyItem{
 		Filename:     clearFileExtend(parsPath[len(parsPath)-1]),
 		FullFilename: parsPath[len(parsPath)-1],
-		Section:      parsPath[0],
+		Section:      section,
 		Directory:    clearLastInPath(path),
 		path:         path,
 	}

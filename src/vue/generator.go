@@ -15,10 +15,10 @@ var temp *template.Template
 
 const vueTemplate string = constants.VUE_TEMPLATE_FILENAME + constants.TEMPLATE_EXTEND
 
-func CreateVueStories(path string, templatePath string) {
+func CreateVueStories(path string, templatePath string, section string) {
 	temp = utils.GetFilteredTemplates(templatePath, vueTemplate)
 
-	files := fileparser.GetStoryItems(parseVueFilesPath(path))
+	files := fileparser.GetStoryItems(parseVueFilesPath(path), section)
 
 	for i := 0; i < len(files); i++ {
 		f, err := os.Create(fmt.Sprintf("%s%s", files[i].Directory, createStoryFilename(files[i].Filename)))
