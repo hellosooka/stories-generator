@@ -8,10 +8,13 @@ import (
 func main() {
 	template := flag.String("t", "./templates/", "")
 	fileTree := flag.String("d", "./testFileTree/", "")
+	isVue := flag.Bool("vue", false, "")
 
 	flag.Parse()
 
-	vue_parser.CreateVueStories(*fileTree, *template)
+	if *isVue {
+		vue_parser.CreateVueStories(*fileTree, *template)
+	}
 
 }
 

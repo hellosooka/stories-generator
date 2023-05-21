@@ -13,8 +13,10 @@ import (
 
 var temp *template.Template
 
+const vueTemplate string = constants.VUE_TEMPLATE_FILENAME + constants.TEMPLATE_EXTEND
+
 func CreateVueStories(path string, templatePath string) {
-	temp = utils.GetTemplates(templatePath)
+	temp = utils.GetFilteredTemplates(templatePath, vueTemplate)
 
 	files := fileparser.GetStoryItems(parseVueFilesPath(path))
 
