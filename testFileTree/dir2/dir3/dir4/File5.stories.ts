@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/vue3";
 import { defineComponent } from "vue";
 
 export default {
-  title: "test/File5",
+  title: "story/File5",
   component: File5,
   argTypes: {
   },
@@ -11,7 +11,7 @@ export default {
     docs: {
       source: {
         code: [
-          "import { File5 } from '@estelink/test'\n\n",
+          "import { File5 } from '@estelink/story'\n\n",
           "<File5 />",
         ].join("\n"),
       },
