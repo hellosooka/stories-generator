@@ -41,7 +41,7 @@ func parseProps(file string) (string, error) {
 		}
 		return findInterface(file, str), nil
 	}
-	return "", errors.New("empty")
+	return "{}", errors.New("empty")
 }
 
 func findInterface(file string, name string) string {

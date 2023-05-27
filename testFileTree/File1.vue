@@ -4,7 +4,7 @@
      bebra: number[]
      bobra: number
      b: boolean
-     heh: { g: string }
+     heh: { g: string,  }
      beb: number
    } 
 
