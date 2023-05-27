@@ -5,8 +5,7 @@ import { defineComponent } from "vue";
 export default {
   title: "story/File1",
   component: File1,
-  argTypes: {
-  },
+  argTypes: { msg: 'string', bebra: 'number[]', bobra: 'number', b: 'boolean', heh: '{ g' },
   parameters: {
     docs: {
       source: {

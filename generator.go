@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	vue_parser "github.com/hellosooka/stories-generator/src/vue"
+	vueStoryGenerator "github.com/hellosooka/stories-generator/src/vue/story"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	flag.Parse()
 
 	if *isVue {
-		vue_parser.CreateVueStories(*fileTree, *template, *section)
+		vueStoryGenerator.CreateVueStories(*fileTree, *template, *section)
 	}
 
 }

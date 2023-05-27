@@ -1,14 +1,16 @@
-package vue_parser
+package vueStoryGenerator
 
 import (
 	"fmt"
-	"github.com/hellosooka/stories-generator/src/constants"
-	fileparser "github.com/hellosooka/stories-generator/src/files"
-	"github.com/hellosooka/stories-generator/src/utils"
 	"log"
 	"os"
 	"sync"
 	"text/template"
+
+	"github.com/hellosooka/stories-generator/src/constants"
+	"github.com/hellosooka/stories-generator/src/stories"
+	"github.com/hellosooka/stories-generator/src/utils"
+	"github.com/hellosooka/stories-generator/src/vue/parser"
 )
 
 var temp *template.Template
@@ -18,7 +20,7 @@ const vueTemplate string = constants.VUE_TEMPLATE_FILENAME + constants.TEMPLATE_
 func CreateVueStories(path string, templatePath string, section string) {
 	var wg sync.WaitGroup
 	temp = utils.GetFilteredTemplates(templatePath, vueTemplate)
-	files := fileparser.GetStoryItems(parseVueFilesPath(path), section)
+	files := stories.GetStoryItems(vueParser.ParseVueFilesPath(path), section)
 
 	wg.Add(len(files))
 	for i := 0; i < len(files); i++ {
@@ -30,8 +32,9 @@ func CreateVueStories(path string, templatePath string, section string) {
 	wg.Wait()
 }
 
-func createStory(story fileparser.StoryItem) {
+func createStory(story stories.StoryItem) {
 	f, err := os.Create(fmt.Sprintf("%s%s", story.Directory, createStoryFilename(story.Filename)))
+	story.Props = vueParser.GetProps(story)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,12 +43,4 @@ func createStory(story fileparser.StoryItem) {
 
 func createStoryFilename(filename string) string {
 	return fmt.Sprintf("%s%s.ts", filename, constants.STORY_POSTFIX)
-}
-
-func parseVueFilesPath(path string) []string {
-	files, err := fileparser.ParseFilesPath(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return fileparser.FilterByExtend(files, constants.VUE_EXTEND)
 }

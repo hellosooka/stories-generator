@@ -5,8 +5,7 @@ import { defineComponent } from "vue";
 export default {
   title: "story/File4",
   component: File4,
-  argTypes: {
-  },
+  argTypes: ,
   parameters: {
     docs: {
       source: {

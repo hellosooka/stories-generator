@@ -5,8 +5,7 @@ import { defineComponent } from "vue";
 export default {
   title: "{{ .Section }}/{{ .Filename }}",
   component: {{ .Filename }},
-  argTypes: {
-  },
+  argTypes: {{ .Props }},
   parameters: {
     docs: {
       source: {
