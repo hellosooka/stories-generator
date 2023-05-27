@@ -1,8 +1,9 @@
 package stories
 
 import (
-	fileparser "github.com/hellosooka/stories-generator/src/files"
 	"strings"
+
+	fileparser "github.com/hellosooka/stories-generator/src/files"
 )
 
 type StoryItem struct {
@@ -29,7 +30,7 @@ func pathToStoryItem(path string, section string) StoryItem {
 		Filename:     fileparser.ClearFileExtend(parsPath[len(parsPath)-1]),
 		FullFilename: parsPath[len(parsPath)-1],
 		Section:      section,
-		Directory:    fileparser.ClearFileExtend(path),
+		Directory:    fileparser.ClearLastInPath(path),
 		path:         path,
 	}
 }

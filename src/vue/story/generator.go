@@ -34,6 +34,7 @@ func CreateVueStories(path string, templatePath string, section string) {
 
 func createStory(story stories.StoryItem) {
 	f, err := os.Create(fmt.Sprintf("%s%s", story.Directory, createStoryFilename(story.Filename)))
+
 	story.Props = vueParser.GetProps(story)
 	if err != nil {
 		log.Fatal(err)

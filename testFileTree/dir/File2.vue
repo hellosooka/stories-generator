@@ -3,6 +3,8 @@
 const props = const props = defineProps<{
     bebra: string
     febra: number
+    goga: { doga: string }
+    bob: string
   }>();
 </script>
 

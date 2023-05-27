@@ -19,7 +19,7 @@ func ClearFileExtend(filename string) string {
 	return strings.Split(filename, ".")[0]
 }
 
-func clearLastInPath(path string) string {
+func ClearLastInPath(path string) string {
 	parsPath := strings.Split(path, "/")
 	var result string
 	for i := 0; i < len(parsPath)-1; i++ {

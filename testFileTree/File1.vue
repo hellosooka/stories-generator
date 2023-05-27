@@ -5,6 +5,7 @@
      bobra: number
      b: boolean
      heh: { g: string }
+     beb: number
    } 
 
   const props = const props = defineProps<Props>();

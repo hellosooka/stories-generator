@@ -19,19 +19,17 @@ func GetProps(story story.StoryItem) string {
 }
 
 func formatProps(inter string) string {
-	f := regexp.MustCompile(`{([\s\S]+?)}`)
-	if f.MatchString(inter) {
-		str := strings.ReplaceAll(strings.TrimSpace(f.FindStringSubmatch(inter)[1]), ",", "")
-		splittedStr := strings.Split(str, "\n")
-
-		for i := 0; i < len(splittedStr); i++ {
-			s := strings.Split(splittedStr[i], ":")
-			splittedStr[i] = fmt.Sprintf(`%s:'%s'`, s[0], strings.TrimSpace(s[1]))
+	clearInter := strings.ReplaceAll(inter, ",", "")
+	commedInter := strings.Replace(strings.Join(strings.Split(clearInter, "\n"), " ,"), ",", "", 1)
+	splittedInter := strings.Split(commedInter, " ")
+	for i := 0; i < len(splittedInter); i++ {
+		reg := regexp.MustCompile("}|{|:|,")
+		if !reg.MatchString(splittedInter[i]) && len(splittedInter[i]) > 0 {
+			splittedInter[i] = fmt.Sprintf("'%s'", splittedInter[i])
 		}
-
-		return fmt.Sprintf("{%s}", strings.Join(splittedStr, ","))
 	}
-	return ""
+
+	return strings.Join(splittedInter, " ")
 }
 
 func parseProps(file string) (string, error) {
@@ -47,8 +45,8 @@ func parseProps(file string) (string, error) {
 }
 
 func findInterface(file string, name string) string {
-	f := regexp.MustCompile(fmt.Sprintf(`interface %s([\s\S]+?){([\s\S]+?)}`, name))
-	return fmt.Sprintf(`{%s}`, f.FindStringSubmatch(file)[2])
+	f := regexp.MustCompile(fmt.Sprintf(`interface %s\s*({([^{}]|{[^{}]*})*})`, name))
+	return f.FindStringSubmatch(file)[1]
 }
 
 func readVueFile(story story.StoryItem) string {
