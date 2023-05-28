@@ -5,7 +5,7 @@ import { defineComponent } from "vue";
 export default {
   title: "story/File2",
   component: File2,
-  argTypes: {     bebra: 'string' ,    febra: 'number' ,    goga: { doga: 'string' } ,    bob: 'string' ,  },
+  argTypes: {     bebra: { control: 'text', defaultValue: '' } ,    febra: { control: 'number', defaultValue: 0 } ,    goga: { doga: { control: 'text', defaultValue: '' } } ,    bob: { control: 'text', defaultValue: '' } ,  },
   parameters: {
     docs: {
       source: {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
  interface Props {
-     msg: string,
+     msg: string
      bebra: number[]
      bobra: number
      b: boolean
-     heh: { g: string,  }
+     heh: { g: string  }
      beb: number
    } 
 

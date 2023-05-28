@@ -25,11 +25,36 @@ func formatProps(inter string) string {
 	for i := 0; i < len(splittedInter); i++ {
 		reg := regexp.MustCompile("}|{|:|,")
 		if !reg.MatchString(splittedInter[i]) && len(splittedInter[i]) > 0 {
-			splittedInter[i] = fmt.Sprintf("'%s'", splittedInter[i])
+			splittedInter[i] = convertToTsType(splittedInter[i])
 		}
 	}
 
 	return strings.Join(splittedInter, " ")
+}
+
+func convertToTsType(t string) string {
+	if strings.Contains(t, "[") {
+		return "{ defaultValue: [] }"
+	}
+	switch strings.TrimSpace(t) {
+	case "number":
+		return "{ control: 'number', defaultValue: 0 }"
+	case "string":
+		return "{ control: 'text', defaultValue: '' }"
+	case "boolean":
+		return "{ control: 'boolean', defaultValue: false }"
+	default:
+		return "{ control: 'object' }"
+	}
+}
+
+func checkOnArray(t string) string {
+	reg := regexp.MustCompile("]|Array")
+	if reg.MatchString(t) {
+		return fmt.Sprintf("[%s]", t)
+	} else {
+		return t
+	}
 }
 
 func parseProps(file string) (string, error) {
