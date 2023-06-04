@@ -19,42 +19,17 @@ func GetProps(story story.StoryItem) string {
 }
 
 func formatProps(inter string) string {
-	clearInter := strings.ReplaceAll(inter, ",", "")
-	commedInter := strings.Replace(strings.Join(strings.Split(clearInter, "\n"), " ,"), ",", "", 1)
-	splittedInter := strings.Split(commedInter, " ")
+	clearInter := strings.ReplaceAll(inter, " ", "")
+	splittedInter := strings.Split(clearInter, "\n")
+	result := []string{}
 	for i := 0; i < len(splittedInter); i++ {
-		reg := regexp.MustCompile("}|{|:|,")
-		if !reg.MatchString(splittedInter[i]) && len(splittedInter[i]) > 0 {
-			splittedInter[i] = convertToTsType(splittedInter[i])
+		line := splittedInter[i]
+		if strings.Contains(line, ":") {
+			splittedLine := strings.Split(line, ":")
+			result = append(result, fmt.Sprintf("\n    %s:%s", strings.ReplaceAll(splittedLine[0], "?", ""), "{}"))
 		}
 	}
-
-	return strings.Join(splittedInter, " ")
-}
-
-func convertToTsType(t string) string {
-	if strings.Contains(t, "[") {
-		return "{ defaultValue: [] }"
-	}
-	switch strings.TrimSpace(t) {
-	case "number":
-		return "{ control: 'number', defaultValue: 0 }"
-	case "string":
-		return "{ control: 'text', defaultValue: '' }"
-	case "boolean":
-		return "{ control: 'boolean', defaultValue: false }"
-	default:
-		return "{ control: 'object' }"
-	}
-}
-
-func checkOnArray(t string) string {
-	reg := regexp.MustCompile("]|Array")
-	if reg.MatchString(t) {
-		return fmt.Sprintf("[%s]", t)
-	} else {
-		return t
-	}
+	return fmt.Sprintf("{%s}", strings.Join(result, ","))
 }
 
 func parseProps(file string) (string, error) {
@@ -71,7 +46,10 @@ func parseProps(file string) (string, error) {
 
 func findInterface(file string, name string) string {
 	f := regexp.MustCompile(fmt.Sprintf(`interface %s\s*({([^{}]|{[^{}]*})*})`, name))
-	return f.FindStringSubmatch(file)[1]
+	if len(f.FindStringSubmatch(file)) > 2 {
+		return f.FindStringSubmatch(file)[1]
+	}
+	return ""
 }
 
 func readVueFile(story story.StoryItem) string {

@@ -33,13 +33,18 @@ func CreateVueStories(path string, templatePath string, section string) {
 }
 
 func createStory(story stories.StoryItem) {
-	f, err := os.Create(fmt.Sprintf("%s%s", story.Directory, createStoryFilename(story.Filename)))
-
-	story.Props = vueParser.GetProps(story)
+	workDirectory := fmt.Sprintf("%s%s", story.Directory, createStoryFilename(story.Filename))
+	_, err := os.Open(workDirectory)
 	if err != nil {
-		log.Fatal(err)
+		f, err := os.Create(workDirectory)
+		defer f.Close()
+
+		story.Props = vueParser.GetProps(story)
+		if err != nil {
+			log.Fatal(err)
+		}
+		temp.Execute(f, story)
 	}
-	temp.Execute(f, story)
 }
 
 func createStoryFilename(filename string) string {

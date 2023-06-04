@@ -6,6 +6,7 @@
      b: boolean
      heh: { g: string  }
      beb: number
+     jopa: 'bebra' | 'bebr'
    } 
 
   const props = const props = defineProps<Props>();
